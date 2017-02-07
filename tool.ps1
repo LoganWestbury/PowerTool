@@ -8,9 +8,10 @@ function pressAnyKey
 	$HOST.UI.RawUI.Flushinputbuffer()
 }
 
+
+
 function populateMainMenu
 {
-	#$totalDir = Get-Location
 	Import-Module howMenuReusable.psm1
 	
 	$menuItems = @(
@@ -23,6 +24,29 @@ function populateMainMenu
 	)
 	
 	showMenuReusable -menuItems $menuItems
+}
+
+
+function openRemoteDrive
+{
+	$remoteIP = Read-Host 'Input Remote IP / Terminal Name'
+	
+	Invoke-Expression "explorer \\$remoteIP\c$"
+	
+}
+
+
+function textSeperateLine
+{
+	[CmdletBinding()]
+	Param (
+		[Parameter(Mandatory = $True)]
+		[String]$inputString
+	)
+	
+	[Environment]::NewLine
+	Write-Host $inputString
+	[Environment]::NewLine
 }
 
 function showMenuReusable
