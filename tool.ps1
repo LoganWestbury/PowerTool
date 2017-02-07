@@ -25,6 +25,22 @@ function populateMainMenu
 	showMenuReusable -menuItems $menuItems
 }
 
+function displayVersion
+{
+	Clear-Host
+	$runasAlias = [Environment]::UserName
+	Write-Host ("/---------------------------------------------------------------\")
+	Write-Host ("|--------------------------Help Desk----------------------------|")
+	Write-Host ("\---------------------------------------------------------------/")
+	
+	[Environment]::NewLine
+	
+	Write-Host ("If you recieve any error messages could you please send a screenshot to Logan.Westbury@ArnoldClark.com") -ForegroundColor Yellow
+	Write-Host ("To temporarily fix most issues just relaunch the program.") -ForegroundColor Yellow
+	[Environment]::NewLine
+}
+
+
 do
 {
 	populateMainMenu
