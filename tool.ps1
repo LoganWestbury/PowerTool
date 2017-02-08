@@ -198,7 +198,7 @@ function queryRemoteHost_hostName
 }
 
 
-function mainMenu
+function displayMenu_mainMenu
 {
 do
 {
@@ -209,46 +209,11 @@ do
 	{
 		'1' {
 			displayVersion
-			Write-Host ("Event Viewer Remote Shutdown Checker")
-			[Environment]::NewLine
-			remoteShutdownChecker
+			displayMenu_activeDirectory
 			pressAnyKey
-			
 		} '2' {
 			displayVersion
-			scanADForLockedOutUsers
-			pressAnyKey
-			
-		} '3' {
-			displayVersion
-			Write-Host ("User Lockout Checker")
-			[Environment]::NewLine
-			Write-Host ("Known Issue - For every user you check for lockouts, you  must restart the application.") -ForegroundColor Yellow
-			[Environment]::NewLine
-			Write-Host ("May take about 30 seconds to complete. Do not press anything else until it has completed.") -ForegroundColor Yellow
-			[Environment]::NewLine
-			$identity = Read-Host 'Input User ID (e00 etc)'
-			[Environment]::NewLine
-			lockoutLocationFinder -Identity $identity
-			pressAnyKey
-			
-		} '4' {
-			displayVersion
-			Write-Host ("Active Directory Query User with Employee ID")
-			[Environment]::NewLine
-			$employeeID = Read-Host 'Input Employee ID (e00 etc)'
-			queryActiveDirectoryUser -employeeID $employeeID
-			pressAnyKey
-			
-		} '5' {
-			displayVersion
-			openRemoteDrive
-			pressAnyKey
-			
-		} '6' {
-			displayVersion
-			Write-Host ("Query Remote Host for System Specs")
-			queryRemoteHost
+			displayMenu_remoteTools
 			pressAnyKey
 		} ('0')
 		{
@@ -259,4 +224,6 @@ do
 until ($input -eq '0')
 }
 
-mainMenu
+
+
+displayMenu_mainMenu
