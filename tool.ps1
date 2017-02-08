@@ -12,23 +12,6 @@ function pressAnyKey
 
 
 
-function populateMainMenu
-{
-	
-	
-	$menuItems = @(
-		"Exit",
-		"Remote Shutdown Checker",
-		"Scan Active Directory for Locked Out Users",
-		"User Lockout Location Checker",
-		"Active Directory Query User with Employee ID",
-		"Open Remote PC's C:\ Drive",
-		"System Specs of Remote Host"
-	)
-	
-	showMenuReusable -menuItems $menuItems
-}
-
 
 function openRemoteDrive
 {
@@ -52,27 +35,7 @@ function textSeperateLine
 	[Environment]::NewLine
 }
 
-function showMenuReusable
-{
-	[CmdletBinding()]
-	Param (
-		[Parameter(Mandatory = $True)]
-		[Array]$menuItems
-	)
-	[Array]$tempMenuArray = $menuItems
-	
-	displayVersion
-	$menuCounter = $tempMenuArray.Length
-	$i = 0
-	
-	do
-	{
-		Write-Host ("Option $i : " + $tempMenuArray[$i])
-		[Environment]::NewLine
-		$i++
-	}
-	until ($i -eq $menuCounter)
-}
+
 
 function remoteShutdownChecker
 {
@@ -190,11 +153,51 @@ function Get-OS {
 
 
 
-
-
-function queryRemoteHost_hostName
+function showMenuReusable
 {
+	[CmdletBinding()]
+	Param (
+		[Parameter(Mandatory = $True)]
+		[Array]$menuItems
+	)
+	[Array]$tempMenuArray = $menuItems
+	
+	displayVersion
+	$menuCounter = $tempMenuArray.Length
+	$i = 0
+	
+	do
+	{
+		Write-Host ("Option $i : " + $tempMenuArray[$i])
+		[Environment]::NewLine
+		$i++
+	}
+	until ($i -eq $menuCounter)
+}
 
+
+
+
+
+
+
+
+
+function populateMenu_activeDirectory
+{
+	
+	
+	$menuItems = @(
+		"Exit",
+		"Remote Shutdown Checker",
+		"Scan Active Directory for Locked Out Users",
+		"User Lockout Location Checker",
+		"Active Directory Query User with Employee ID",
+		"Open Remote PC's C:\ Drive",
+		"System Specs of Remote Host"
+	)
+	
+	showMenuReusable -menuItems $menuItems
 }
 
 function displayMenu_activeDirectory
@@ -202,17 +205,53 @@ function displayMenu_activeDirectory
 
 }
 
+function populateMenu_remoteTools
+{
+	
+	
+	$menuItems = @(
+		"Exit",
+		"Remote Shutdown Checker",
+		"Scan Active Directory for Locked Out Users",
+		"User Lockout Location Checker",
+		"Active Directory Query User with Employee ID",
+		"Open Remote PC's C:\ Drive",
+		"System Specs of Remote Host"
+	)
+	
+	showMenuReusable -menuItems $menuItems
+}
+
 function displayMenu_remoteTools
 {
 
 }
+
+
+function populateMenu_mainMenu
+{
+	
+	
+	$menuItems = @(
+		"Exit",
+		"Remote Shutdown Checker",
+		"Scan Active Directory for Locked Out Users",
+		"User Lockout Location Checker",
+		"Active Directory Query User with Employee ID",
+		"Open Remote PC's C:\ Drive",
+		"System Specs of Remote Host"
+	)
+	
+	showMenuReusable -menuItems $menuItems
+}
+
 
 function displayMenu_mainMenu
 {
 
 do
 {
-	populateMainMenu
+	populateMenu_mainMenu
 	$input = Read-Host "Select an option"
 	
 	switch ($input)
