@@ -139,17 +139,30 @@ function displayVersion
 	
 	[Environment]::NewLine
 	
-	Write-Host ("If you recieve any error messages could you please send a screenshot to Logan.Westbury@ArnoldClark.com") -ForegroundColor Yellows
+	Write-Host ("If you recieve any error messages could you please send a screenshot to Logan.Westbury@ArnoldClark.com") -ForegroundColor Yellow
 	Write-Host ("To temporarily fix most issues just relaunch the program.") -ForegroundColor Yellow
 	[Environment]::NewLine
 }
 
 function queryRemoteHost
 {
-	$hostName = Read-Host "Enter the hostname / IP address:"
+	[Environment]::NewLine
+	[Environment]::NewLine
+	$userQueryInput = Read-Host "Enter the hostname / IP address"
     
 	# Call function to resolve a host name from an IP address
-
+	$queryHostName = [System.Net.Dns]::GetHostEntry($userQueryInput).Hostname
+	
+	# Call function to resolve an IP address from a host name
+	$queryIPAddress = [System.Net.Dns]::GetHostAddresses($userQueryInput)
+	
+	[Environment]::NewLine
+	[Environment]::NewLine
+	Write-Host ("Host: " + $queryHostName)
+	Write-Host ("IP: " + $queryIPAddress)
+	
+	
+	pressAnyKey
 }
 
 function queryRemoteHost_hostName
@@ -206,6 +219,7 @@ do
 		} '6' {
 			displayVersion
 			Write-Host ("Query Remote Host for System Specs")
+			queryRemoteHost
 			pressAnyKey
 		} ('0')
 		{
