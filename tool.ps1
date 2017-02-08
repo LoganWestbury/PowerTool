@@ -144,6 +144,10 @@ function displayVersion
 	[Environment]::NewLine
 }
 
+function queryRemoteHost
+{
+
+}
 
 
 do
