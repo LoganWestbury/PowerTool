@@ -197,9 +197,19 @@ function queryRemoteHost_hostName
 
 }
 
+function displayMenu_activeDirectory
+{
+
+}
+
+function displayMenu_remoteTools
+{
+
+}
 
 function displayMenu_mainMenu
 {
+
 do
 {
 	populateMainMenu
