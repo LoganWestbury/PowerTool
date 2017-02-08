@@ -1,5 +1,7 @@
 Import-Module ActiveDirectory
 
+
+
 function pressAnyKey
 {
 	# Wait for user to press any key to continue, gives user time to read output
@@ -196,6 +198,8 @@ function queryRemoteHost_hostName
 }
 
 
+function mainMenu
+{
 do
 {
 	populateMainMenu
@@ -253,3 +257,6 @@ do
 	}
 }
 until ($input -eq '0')
+}
+
+mainMenu
