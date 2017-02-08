@@ -19,8 +19,9 @@ function populateMainMenu
 		"Remote Shutdown Checker",
 		"Scan Active Directory for Locked Out Users",
 		"User Lockout Location Checker",
-		"Active Directory Query User with Employee ID"
-		"Open Remote PC's C:\ Drive"
+		"Active Directory Query User with Employee ID",
+		"Open Remote PC's C:\ Drive",
+		"System Specs of Remote Host"
 	)
 	
 	showMenuReusable -menuItems $menuItems
@@ -144,6 +145,7 @@ function displayVersion
 }
 
 
+
 do
 {
 	populateMainMenu
@@ -187,6 +189,11 @@ do
 		} '5' {
 			displayVersion
 			openRemoteDrive
+			pressAnyKey
+			
+		} '6' {
+			displayVersion
+			Write-Host ("Query Remote Host for System Specs")
 			pressAnyKey
 		} ('0')
 		{
