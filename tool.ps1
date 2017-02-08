@@ -139,12 +139,20 @@ function displayVersion
 	
 	[Environment]::NewLine
 	
-	Write-Host ("If you recieve any error messages could you please send a screenshot to Logan.Westbury@ArnoldClark.com") -ForegroundColor Yellow
+	Write-Host ("If you recieve any error messages could you please send a screenshot to Logan.Westbury@ArnoldClark.com") -ForegroundColor Yellows
 	Write-Host ("To temporarily fix most issues just relaunch the program.") -ForegroundColor Yellow
 	[Environment]::NewLine
 }
 
 function queryRemoteHost
+{
+	$hostName = Read-Host "Enter the hostname / IP address:"
+    
+	# Call function to resolve a host name from an IP address
+
+}
+
+function queryRemoteHost_hostName
 {
 
 }
