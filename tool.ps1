@@ -156,14 +156,39 @@ function queryRemoteHost
 	# Call function to resolve an IP address from a host name
 	$queryIPAddress = [System.Net.Dns]::GetHostAddresses($userQueryInput)
 	
-	[Environment]::NewLine
-	[Environment]::NewLine
+	# Call function to get host version of Windows
+	#$queryHostWinVersion = Get-WmiObject Win32_OperatingSystem -computername $userQueryInput -ea stop
+	#$queryHostWinVersion = Get-WmiObject -class Win32_OperatingSystem -computername $userQueryInput
+    #$queryHostWinVersion = get-wmiobject win32_computersystem -computer $userQueryInput | select-object Caption
+	
+	
 	Write-Host ("Host: " + $queryHostName)
 	Write-Host ("IP: " + $queryIPAddress)
+	#Write-Host ("Windows Version: " + $queryHostWinVersion)
 	
+	
+#	Get-WmiObject Win32_OperatingSystem -ComputerName $userQueryInput,2K8R2,WSUS,SOFSR2Node1,SOFSR2Node2 | Select-Object CSName,Caption,CSDVersion,@{Label="InstallDate";Expression={[System.Management.ManagementDateTimeConverter]::ToDateTime($($_.InstallDate))}},@{Label="LastBootUpTime";Expression={[System.Management.ManagementDateTimeConverter]::ToDateTime($($_.LastBootUpTime))}},MUILanguages,OSArchitecture,ServicePackMajorVersion,Version | Format-Table
 	
 	pressAnyKey
+	
+	
+	
+	
 }
+
+
+function Get-OS {
+  Param([string]$computername=$(Throw "You must specify a computername."))
+  Write-Debug "In Get-OS Function"
+  $wmi=Get-WmiObject Win32_OperatingSystem -computername $computername -ea stop
+  
+  write $wmi
+
+}
+
+
+
+
 
 function queryRemoteHost_hostName
 {
