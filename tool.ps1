@@ -112,16 +112,20 @@ function remoteShutdownChecker
 
 function scanADForLockedOutUsers
 {
-<#
+
 	textSeperateLine -inputString 'List of currently locked out users from Active Directory:'
 	Search-ADAccount -LockedOut | Format-Table Name, LastLogonDate, PasswordExpired, PasswordNeverExpires, SamAccountName -Wrap
-#>
+
+
+<#
 $Write = ("Select a user account and then click Ok to scan the system for the location of the lockout.")
 textSeperateLine $Write
 
  Search-ADAccount -LockedOut |
     Select-Object Name, SamAccountName, Enabled, LastLogonDate, PasswordExpired, PasswordNeverExpires | Out-GridView -PassThru -Title "List of Locked Out Accounts" | Foreach-Object { lockoutLocationFinder -Identity $_.SamAccountName}
 
+#>
+	
 }
 
 function displayVersion
