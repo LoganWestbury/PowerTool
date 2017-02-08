@@ -185,16 +185,11 @@ function showMenuReusable
 
 function populateMenu_activeDirectory
 {
-	
-	
 	$menuItems = @(
 		"Exit",
-		"Remote Shutdown Checker",
 		"Scan Active Directory for Locked Out Users",
 		"User Lockout Location Checker",
-		"Active Directory Query User with Employee ID",
-		"Open Remote PC's C:\ Drive",
-		"System Specs of Remote Host"
+		"Active Directory Query User with Employee ID"
 	)
 	
 	showMenuReusable -menuItems $menuItems
@@ -202,7 +197,28 @@ function populateMenu_activeDirectory
 
 function displayMenu_activeDirectory
 {
-
+do
+{
+	populateMenu_activeDirectory
+	$input = Read-Host "Select an option"
+	
+	switch ($input)
+	{
+		'1' {
+			displayVersion
+			displayMenu_activeDirectory
+			pressAnyKey
+		} '2' {
+			displayVersion
+			displayMenu_remoteTools
+			pressAnyKey
+		} ('0')
+		{
+			return
+		}
+	}
+}
+until ($input -eq '0')
 }
 
 function populateMenu_remoteTools
