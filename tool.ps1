@@ -429,7 +429,12 @@ function displayMenu_activeDirectory {
                 Write-Host("Active Directory Query User with Employee ID")
                 queryActiveDirUser
                 pressAnyKey
-            } ('0') {
+            } '4' {
+                displayVersion
+                Write-Host("Active Directory User Reset Password")
+                activeDirUserPassReset
+                pressAnyKey
+             } ('0') {
                 return
             }
         }
