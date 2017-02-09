@@ -9,9 +9,7 @@ function pressAnyKey {
 
 function openRemoteDrive {
     $remoteIP = Read-Host 'Input Remote IP / Terminal Name'
-	
     Invoke-Expression "explorer \\$remoteIP\c$"
-	
 }
 
 
@@ -30,7 +28,6 @@ function textSeperateLine {
 
 
 function remoteShutdownChecker {
-	
 	
     # Script for displaying scanning the event log of a remote PC and displaying when the PC has been shutdown/restarted.
     # LW - 16/09/2016 
@@ -123,10 +120,6 @@ function queryRemoteHost {
     #	Get-WmiObject Win32_OperatingSystem -ComputerName $userQueryInput,2K8R2,WSUS,SOFSR2Node1,SOFSR2Node2 | Select-Object CSName,Caption,CSDVersion,@{Label="InstallDate";Expression={[System.Management.ManagementDateTimeConverter]::ToDateTime($($_.InstallDate))}},@{Label="LastBootUpTime";Expression={[System.Management.ManagementDateTimeConverter]::ToDateTime($($_.LastBootUpTime))}},MUILanguages,OSArchitecture,ServicePackMajorVersion,Version | Format-Table
 	
     pressAnyKey
-	
-	
-	
-	
 }
 
 
@@ -135,11 +128,9 @@ function Get-OS {
 Write-Debug "In Get-OS Function"
 $wmi=Get-WmiObject Win32_OperatingSystem -computername $computername -ea stop
   
-write $wmi
+Write-Output $wmi
 
 }
-
-
 
 function showMenuReusable {
     [CmdletBinding()]
@@ -161,17 +152,9 @@ function showMenuReusable {
     until ($i -eq $menuCounter)
 }
 
-
-
-
-
-
-
-
-
 function populateMenu_activeDirectory {
     $menuItems = @(
-        "Exit",
+        "Return",
         "Scan Active Directory for Locked Out Users",
         "User Lockout Location Checker",
         "Active Directory Query User with Employee ID"
@@ -188,13 +171,18 @@ function displayMenu_activeDirectory {
         switch ($input) {
             '1' {
                 displayVersion
-                Write-Host("Active Directory Sub Menu")
-                displayMenu_activeDirectory
+                Write-Host("Scan Active Directory for Locked Out Users")
+                x
                 pressAnyKey
             } '2' {
                 displayVersion
-                Write-Host("Remote Tools Sub Menu")
-                displayMenu_remoteTools
+                Write-Host("User Lockout Location Checker")
+                
+                pressAnyKey
+            } '3' {
+                displayVersion
+                Write-Host("Active Directory Query User with Employee ID")
+                
                 pressAnyKey
             } ('0') {
                 return
@@ -206,7 +194,7 @@ function displayMenu_activeDirectory {
 
 function populateMenu_remoteTools {	
     $menuItems = @(
-        "Exit",
+        "Return",
         "Remote Shutdown Checker",
         "Open Remote PC's C:\ Drive",
         "System Specs of Remote Host"
@@ -223,40 +211,38 @@ function displayMenu_remoteTools {
         switch ($input) {
             '1' {
                 displayVersion
-                Write-Host("Active Directory Sub Menu")
-                displayMenu_activeDirectory
+                Write-Host("Remote Shutdown Checker")
+                
                 pressAnyKey
             } '2' {
                 displayVersion
-                Write-Host("Remote Tools Sub Menu")
-                displayMenu_remoteTools
+                Write-Host("Open Remote PC's C:\ Drive")
+                
+                pressAnyKey
+            } '3' {
+                displayVersion
+                Write-Host("System Specs of Remote Host")
+                
                 pressAnyKey
             } ('0') {
                 return
             }
         }
-    }
+    }    
+    until ($input -eq '0')
 }
 
 function populateMenu_mainMenu {
-	
-	
     $menuItems = @(
         "Exit",
-        "Remote Shutdown Checker",
-        "Scan Active Directory for Locked Out Users",
-        "User Lockout Location Checker",
-        "Active Directory Query User with Employee ID",
-        "Open Remote PC's C:\ Drive",
-        "System Specs of Remote Host"
+        "Active Directory Sub Menu",
+        "Remote Tools Sub Menu"
     )
-	
     showMenuReusable -menuItems $menuItems
 }
 
 
 function displayMenu_mainMenu {
-
     do {
         populateMenu_mainMenu
         $input = Read-Host "Select an option"
@@ -279,5 +265,5 @@ function displayMenu_mainMenu {
 }
 
 
-
+# Program starts here
 displayMenu_mainMenu
