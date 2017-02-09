@@ -123,6 +123,16 @@ function queryRemoteHost {
 }
 
 
+function queryActiveDirUser{
+
+    
+}
+
+
+
+
+
+
 function Get-OS {
     Param([string]$computername=$(Throw "You must specify a computername."))
 Write-Debug "In Get-OS Function"
@@ -172,7 +182,7 @@ function displayMenu_activeDirectory {
             '1' {
                 displayVersion
                 Write-Host("Scan Active Directory for Locked Out Users")
-                x
+                scanADForLockedOutUsers
                 pressAnyKey
             } '2' {
                 displayVersion
@@ -182,7 +192,7 @@ function displayMenu_activeDirectory {
             } '3' {
                 displayVersion
                 Write-Host("Active Directory Query User with Employee ID")
-                
+                queryActiveDirUser
                 pressAnyKey
             } ('0') {
                 return
