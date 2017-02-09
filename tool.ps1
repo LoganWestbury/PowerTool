@@ -125,7 +125,7 @@ function queryRemoteHost {
 
 function queryActiveDirUser{
     $queryUserInput = Read-Host("Enter username: ")
-    
+    Get-ADUser $queryUserInput -properties CN, Company, Department, EmailAddress, SamAccountName, Enabled, physicalDeliveryOfficeName
 
 }
 
