@@ -124,8 +124,9 @@ function queryRemoteHost {
 
 
 function queryActiveDirUser{
-
+    $queryUserInput = Read-Host("Enter username: ")
     
+
 }
 
 
