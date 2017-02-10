@@ -379,7 +379,40 @@ Write-Output $wmi
 
 }
 
+function findUserComputerLogin {
+    $inputUserName = ""
+    $FILESERVER = ""
 
+    $inputUserName = Read-Host "Please enter the Primary  user"
+
+    
+    # Connect Remotely to Server, Run Session, get a list of everybody logged in there 
+
+    $S = New-PSSession –computername $FILESERVER 
+    $Results = (INVOKE-COMMAND –Session $s –scriptblock { (NET SESSION) }) | Select-string $inputUserName 
+    Remove-PSSession $S
+    # parse through the data and pull out what we need   
+    Foreach ( $Part in $RESULTS ) {
+        $ComputerIP=$Part.Line.substring(2,21).trim() 
+        $User = $Part.Line.substring(21,44).trim()
+        # Use nslookup to identify the computer, grab the line with the “Name:” field in it
+        $Computername=([System.Net.dns]::GetHostbyAddress("$ComputerIP"))
+        $computername =  $ComputerName.HostName
+        If ($Computername -eq $NULL) {
+            $Computername = ”Unknown”
+        } 
+        #Else { $Computername=$Computername.substring(9).trim()}
+        If($User -eq $null){
+            write-host "No computer found for $Username, Please check the name and try again. 'n A partial samaccountname works best"
+        }
+        else{
+            write-host 
+            # show what computer/s they are using
+            “$User is logged into $Computername with IP address $ComputerIP”
+            $global:findusercomputer = $computername
+        }
+    }
+}
 
 
 
