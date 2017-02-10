@@ -361,6 +361,49 @@ function queryRemoteHost {
     pressAnyKey
 }
 
+function findUserComputerLogin {
+    <# 
+
+
+                -- If issues look into the substring select --
+        #>
+
+    [CmdletBinding()]
+    param
+    (
+        [Parameter(Mandatory=$true, Position=0)]
+        [Object]
+        $Username = (read-host "Please enter the Primary  user"),
+        $FILESERVER = "name of fileserver"
+    )
+    # Connect Remotely to Server, Run Session, get a list of everybody logged in there 
+
+    $S=NEW-PSSESSION –computername $FILESERVER 
+    $Results=(INVOKE-COMMAND –Session $s –scriptblock { (NET SESSION) }) | Select-string $USERNAME 
+    REMOVE-PSSESSION $S
+    # parse through the data and pull out what we need   
+    Foreach ( $Part in $RESULTS ) {
+        $ComputerIP=$Part.Line.substring(2,21).trim() 
+        $User = $Part.Line.substring(21,44).trim()
+        # Use nslookup to identify the computer, grab the line with the “Name:” field in it
+        $Computername=([System.Net.dns]::GetHostbyAddress("$ComputerIP"))
+        $computername =  $ComputerName.HostName
+        If ($Computername -eq $NULL) {
+            $Computername=”Unknown”
+        } 
+        #Else { $Computername=$Computername.substring(9).trim()}
+        If($User -eq $null){
+            write-host "No computer found for $Username, Please check the name and try again. 'n A partial samaccountname works best"
+        }
+        else{
+            write-host 
+            # show what computer/s they are using
+            “$User is logged into $Computername with IP address $ComputerIP”
+            $global:findusercomputer = $computername
+        }
+    }
+}
+
 
 function queryActiveDirUser{
     $queryUserInput = Read-Host("Enter username: ")
@@ -409,7 +452,8 @@ function populateMenu_activeDirectory {
         "User Lockout Location Checker",
         "Query User with Employee ID",
         "Reset Users Password",
-        "List Members of a Group"
+        "List Members of a Group",
+        "Find Computer via User"
     )
 	
     showMenuReusable -menuItems $menuItems
@@ -441,12 +485,17 @@ function displayMenu_activeDirectory {
                 Write-Host("Reset Users Password")
                 activeDirUserPassReset
                 pressAnyKey
-             } '5' {
+            } '5' {
                 displayVersion
                 Write-Host("List Members of a Group")
                 activeDirListGroupMembers
                 pressAnyKey
-             }  ('0') {
+            }  '6' {
+                displayVersion
+                Write-Host("Find Computer via User")
+                findUserComputerLogin
+                pressAnyKey
+            }  ('0') {
                 return
             }
         }
@@ -521,8 +570,7 @@ function displayMenu_mainMenu {
                 return
             }
         }
-    }
-    until ($input -eq '0')
+    }  until ($input -eq '0')
 }
 
 
