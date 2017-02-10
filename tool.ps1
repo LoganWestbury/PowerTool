@@ -377,6 +377,11 @@ Write-Output $wmi
 
 }
 
+function activeDirListGroupMembers{
+    $queryUserInput = Read-Host("Enter group name: ")
+    Get-ADGroupMember $queryUserInput | select-object name | sort-object name
+}
+
 function showMenuReusable {
     [CmdletBinding()]
     Param (
@@ -400,9 +405,11 @@ function showMenuReusable {
 function populateMenu_activeDirectory {
     $menuItems = @(
         "Return",
-        "Scan Active Directory for Locked Out Users",
+        "Scan AD for Locked Out Users",
         "User Lockout Location Checker",
-        "Active Directory Query User with Employee ID"
+        "Query User with Employee ID",
+        "Reset Users Password",
+        "List Members of a Group"
     )
 	
     showMenuReusable -menuItems $menuItems
@@ -416,7 +423,7 @@ function displayMenu_activeDirectory {
         switch ($input) {
             '1' {
                 displayVersion
-                Write-Host("Scan Active Directory for Locked Out Users")
+                Write-Host("Scan AD for Locked Out Users")
                 scanADForLockedOutUsers
                 pressAnyKey
             } '2' {
@@ -426,15 +433,20 @@ function displayMenu_activeDirectory {
                 pressAnyKey
             } '3' {
                 displayVersion
-                Write-Host("Active Directory Query User with Employee ID")
+                Write-Host("Query User with Employee ID")
                 queryActiveDirUser
                 pressAnyKey
             } '4' {
                 displayVersion
-                Write-Host("Active Directory User Reset Password")
+                Write-Host("Reset Users Password")
                 activeDirUserPassReset
                 pressAnyKey
-             } ('0') {
+             } '5' {
+                displayVersion
+                Write-Host("List Members of a Group")
+                activeDirListGroupMembers
+                pressAnyKey
+             }  ('0') {
                 return
             }
         }
@@ -512,7 +524,6 @@ function displayMenu_mainMenu {
     }
     until ($input -eq '0')
 }
-
 
 
 # Program starts here
