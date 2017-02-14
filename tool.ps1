@@ -4,6 +4,26 @@ Import-Module ActiveDirectory
 ########################################################################## BEGIN FUNCTION LIBRARY ###########################################################################
 #############################################################################################################################################################################
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function pressAnyKey {
     # Wait for user to press any key to continue, gives user time to read output
     textSeperateLine -inputString "Press any key to continue..."
@@ -11,10 +31,40 @@ function pressAnyKey {
     $HOST.UI.RawUI.Flushinputbuffer()
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function openRemoteDrive {
     $remoteIP = Read-Host 'Input Remote IP / Terminal Name'
     Invoke-Expression "explorer \\$remoteIP\c$"
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function textSeperateLine {
@@ -28,6 +78,25 @@ function textSeperateLine {
     Write-Host $inputString
     [Environment]::NewLine
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function addADUserToLocalAdmin{
 
@@ -75,6 +144,31 @@ findLoggedOnUser -ComputerName $inputHostName
 
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function findLoggedOnUser { 
        
 [CmdletBinding()]             
@@ -121,6 +215,28 @@ End
 }#End 
  
 }#Get-LoggedOnUser 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -376,6 +492,26 @@ $data.GetEnumerator() | Sort-Object 'Name' | Out-GridView -Title "$computer Info
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function remoteShutdownChecker {
 	
     # Script for displaying scanning the event log of a remote PC and displaying when the PC has been shutdown/restarted.
@@ -413,6 +549,25 @@ function remoteShutdownChecker {
     Get-WinEvent -ComputerName $remoteIP -FilterHashtable $FilterLog | Format-Table -AutoSize
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function scanADForLockedOutUsers {
 
     textSeperateLine -inputString 'List of currently locked out users from Active Directory:'
@@ -430,6 +585,23 @@ textSeperateLine $Write
 	
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function displayVersion {
     Clear-Host
     $runasAlias = [Environment]::UserName
@@ -442,6 +614,21 @@ function displayVersion {
     Write-Host ("If you recieve any error messages could you please send a screenshot to Logan.Westbury@ArnoldClark.com") -ForegroundColor Yellow
     [Environment]::NewLine
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function queryRemoteHost {
     [Environment]::NewLine
@@ -475,11 +662,39 @@ function queryRemoteHost {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function queryActiveDirUser{
     $queryUserInput = Read-Host("Enter username: ")
     Get-ADUser $queryUserInput -properties CN, Company, Department, EmailAddress, SamAccountName, Enabled, physicalDeliveryOfficeName
     net user $queryUserInput /domain
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function Get-OS {
     Param([string]$computername=$(Throw "You must specify a computername."))
@@ -498,10 +713,31 @@ Write-Output $wmi
 
 
 
+
+
+
+
+
+
+
+
+
 function activeDirListGroupMembers{
     $queryUserInput = Read-Host("Enter group name: ")
     Get-ADGroupMember $queryUserInput | select-object name | sort-object name
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 function showMenuReusable {
     [CmdletBinding()]
@@ -523,6 +759,20 @@ function showMenuReusable {
     until ($i -eq $menuCounter)
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function populateMenu_activeDirectory {
     $menuItems = @(
         "Return",
@@ -536,6 +786,19 @@ function populateMenu_activeDirectory {
 	
     showMenuReusable -menuItems $menuItems
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function displayMenu_activeDirectory {
     do {
@@ -581,6 +844,19 @@ function displayMenu_activeDirectory {
     until ($input -eq '0')
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 function populateMenu_remoteTools {	
     $menuItems = @(
         "Return",
@@ -592,6 +868,17 @@ function populateMenu_remoteTools {
 	
     showMenuReusable -menuItems $menuItems
 }
+
+
+
+
+
+
+
+
+
+
+
 
 function displayMenu_remoteTools {
     do {
@@ -627,6 +914,17 @@ function displayMenu_remoteTools {
     until ($input -eq '0')
 }
 
+
+
+
+
+
+
+
+
+
+
+
 function populateMenu_mainMenu {
     $menuItems = @(
         "Exit",
@@ -635,6 +933,15 @@ function populateMenu_mainMenu {
     )
     showMenuReusable -menuItems $menuItems
 }
+
+
+
+
+
+
+
+
+
 
 function displayMenu_mainMenu {
     do {
