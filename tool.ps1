@@ -25,6 +25,69 @@ function textSeperateLine {
     [Environment]::NewLine
 }
 
+function addADUserToLocalAdmin{
+
+    [CmdletBinding()]
+    Param (
+        [Parameter(Mandatory = $True)]
+        [String]$inputUserName
+       
+    )
+
+    Param (
+        [Parameter(Mandatory = $True)]
+        [String]$inputHostName
+       
+    )
+
+ 
+    Set-ADAccountasLocalAdministrator.ps1.ps1 -Computer $inputHostName -Trustee $inputUserName
+
+
+
+}
+
+
+function createDesktopShortcut{
+
+    [CmdletBinding()]
+    Param (
+        [Parameter(Mandatory = $True)]
+        [String]$inputHostName
+       
+    )
+
+# Find logged in user
+
+
+  
+# Create desktop URL using logged in username 
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function Get-SystemInfo {
     param(
         [Parameter(Mandatory=$true)] $ComputerName,
@@ -542,3 +605,5 @@ function displayMenu_mainMenu {
 
 # Program starts here
 displayMenu_mainMenu
+
+
