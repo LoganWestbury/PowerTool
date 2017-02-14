@@ -1,28 +1,16 @@
+##########################################################
+#   Import Required Modules
+##########################################################
+
 Import-Module ActiveDirectory
 
-#############################################################################################################################################################################
-########################################################################## BEGIN FUNCTION LIBRARY ###########################################################################
-#############################################################################################################################################################################
+##############################################################################################################################################
+########################################################### BEGIN FUNCTION LIBRARY ###########################################################
+##############################################################################################################################################
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+##########################################################
+#   PRESS ANY KEY
+##########################################################
 
 function pressAnyKey {
     # Wait for user to press any key to continue, gives user time to read output
@@ -31,41 +19,18 @@ function pressAnyKey {
     $HOST.UI.RawUI.Flushinputbuffer()
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+##########################################################
+#   Open Remote Drive   
+##########################################################
 
 function openRemoteDrive {
     $remoteIP = Read-Host 'Input Remote IP / Terminal Name'
     Invoke-Expression "explorer \\$remoteIP\c$"
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+##########################################################
+#   Text Seperate Line  
+##########################################################
 
 function textSeperateLine {
     [CmdletBinding()]
@@ -79,24 +44,9 @@ function textSeperateLine {
     [Environment]::NewLine
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+##########################################################
+#   Add AD User to Local Admin Group  
+##########################################################
 
 function addADUserToLocalAdmin{
 
@@ -112,14 +62,14 @@ function addADUserToLocalAdmin{
         [String]$inputHostName
        
     )
-
  
     Set-ADAccountasLocalAdministrator.ps1.ps1 -Computer $inputHostName -Trustee $inputUserName
 
-
-
 }
 
+##########################################################
+#   Create Desktop Shortcuts
+##########################################################
 
 function createDesktopShortcut{
 
@@ -132,42 +82,15 @@ function createDesktopShortcut{
 
 # Find logged in user
 findLoggedOnUser -ComputerName $inputHostName
-
   
 # Create desktop URL using logged in username 
-
-
-
-
-
-
 
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+##########################################################
+#   Find Logged on User
+##########################################################
 
 function findLoggedOnUser { 
        
@@ -216,49 +139,15 @@ End
  
 }#Get-LoggedOnUser 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+##########################################################
+#   Query System Specs
+##########################################################
 
 function Get-SystemInfo {
     param(
         [Parameter(Mandatory=$true)] $ComputerName,
         [switch] $IgnorePing
     )
-
 
     $computer = $ComputerName
 
@@ -314,8 +203,7 @@ if ($ping -or $ignorePing) {
         $wmi | Select 'DeviceID', 'Size', 'FreeSpace' | Foreach {
             
             $data."Local disk $($_.DeviceID)" = ('' + ($_.FreeSpace/1MB).ToString('N') + ' MB free of ' + ($_.Size/1MB).ToString('N') + ' MB total space with ' + ($_.Size/1MB - $_.FreeSpace/1MB).ToString('N') +' MB Used Space')
-            
-            
+                   
         }
         
     }
@@ -443,7 +331,6 @@ else {
 
 $wmi = $null
 
-
 if ($wmi = Get-WmiObject -Class Win32_OperatingSystem -computername $Computer -ErrorAction SilentlyContinue| Select-Object Name, TotalVisibleMemorySize, FreePhysicalMemory,TotalVirtualMemorySize,FreeVirtualMemory,FreeSpaceInPagingFiles,NumberofProcesses,NumberOfUsers ) {
         
     $wmi | Foreach {
@@ -482,35 +369,14 @@ if ($wmi = Get-WmiObject -Class Win32_OperatingSystem -computername $Computer -E
 "Generated from $(gc env:computername)"
 "#"*80
 
-
-
 $data.GetEnumerator() | Sort-Object 'Name' | Format-Table -AutoSize
 $data.GetEnumerator() | Sort-Object 'Name' | Out-GridView -Title "$computer Information"
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+##########################################################
+#   Remote Shutdown Checker
+##########################################################
 
 function remoteShutdownChecker {
 	
@@ -549,30 +415,14 @@ function remoteShutdownChecker {
     Get-WinEvent -ComputerName $remoteIP -FilterHashtable $FilterLog | Format-Table -AutoSize
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+##########################################################
+#   Scan AD for Locked Out Accounts
+##########################################################
 
 function scanADForLockedOutUsers {
 
     textSeperateLine -inputString 'List of currently locked out users from Active Directory:'
     Search-ADAccount -LockedOut | Format-Table Name, LastLogonDate, PasswordExpired, PasswordNeverExpires, SamAccountName -Wrap
-
 
     <#
 $Write = ("Select a user account and then click Ok to scan the system for the location of the lockout.")
@@ -585,22 +435,9 @@ textSeperateLine $Write
 	
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+##########################################################
+#   Display Console Window Header
+##########################################################
 
 function displayVersion {
     Clear-Host
@@ -615,20 +452,9 @@ function displayVersion {
     [Environment]::NewLine
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+##########################################################
+#   Resolve Hostname from IP
+##########################################################
 
 function queryRemoteHost {
     [Environment]::NewLine
@@ -645,56 +471,30 @@ function queryRemoteHost {
     #$queryHostWinVersion = Get-WmiObject Win32_OperatingSystem -computername $userQueryInput -ea stop
     #$queryHostWinVersion = Get-WmiObject -class Win32_OperatingSystem -computername $userQueryInput
     #$queryHostWinVersion = get-wmiobject win32_computersystem -computer $userQueryInput | select-object Caption
-	
-	
+		
     Write-Host ("Host: " + $queryHostName)
     Write-Host ("IP: " + $queryIPAddress)
     #Write-Host ("Windows Version: " + $queryHostWinVersion)
 
     Get-SystemInfo -ComputerName $userQueryInput
-	
-	
+
     #	Get-WmiObject Win32_OperatingSystem -ComputerName $userQueryInput,2K8R2,WSUS,SOFSR2Node1,SOFSR2Node2 | Select-Object CSName,Caption,CSDVersion,@{Label="InstallDate";Expression={[System.Management.ManagementDateTimeConverter]::ToDateTime($($_.InstallDate))}},@{Label="LastBootUpTime";Expression={[System.Management.ManagementDateTimeConverter]::ToDateTime($($_.LastBootUpTime))}},MUILanguages,OSArchitecture,ServicePackMajorVersion,Version | Format-Table
 	
     pressAnyKey
-
-    
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+##########################################################
+#   Query Active Directory User
+##########################################################
 function queryActiveDirUser{
     $queryUserInput = Read-Host("Enter username: ")
     Get-ADUser $queryUserInput -properties CN, Company, Department, EmailAddress, SamAccountName, Enabled, physicalDeliveryOfficeName
     net user $queryUserInput /domain
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
+##########################################################
+#   Resolve Hostname from IP
+##########################################################
 
 function Get-OS {
     Param([string]$computername=$(Throw "You must specify a computername."))
@@ -705,39 +505,26 @@ Write-Output $wmi
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+##########################################################
+#   List Members of an AD Group
+##########################################################
 
 function activeDirListGroupMembers{
     $queryUserInput = Read-Host("Enter group name: ")
     Get-ADGroupMember $queryUserInput | select-object name | sort-object name
 }
 
+##############################################################################################################################################
+############################################################ END FUNCTION LIBRARY ############################################################
+##############################################################################################################################################
 
+##############################################################################################################################################
+############################################################  BEGIN MENU LIBRARY  ############################################################
+##############################################################################################################################################
 
-
-
-
-
-
-
-
-
-
+##########################################################
+#   Reusable Function to Display Any Menu
+##########################################################
 
 function showMenuReusable {
     [CmdletBinding()]
@@ -759,19 +546,9 @@ function showMenuReusable {
     until ($i -eq $menuCounter)
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+##########################################################
+#   Populate the Active Directory Menu Array
+##########################################################
 
 function populateMenu_activeDirectory {
     $menuItems = @(
@@ -787,18 +564,9 @@ function populateMenu_activeDirectory {
     showMenuReusable -menuItems $menuItems
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
+##########################################################
+#   Display the Active Directory Menu 
+##########################################################
 
 function displayMenu_activeDirectory {
     do {
@@ -844,18 +612,9 @@ function displayMenu_activeDirectory {
     until ($input -eq '0')
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
+##########################################################
+#   Populate the Remote Tools Array
+##########################################################
 
 function populateMenu_remoteTools {	
     $menuItems = @(
@@ -869,16 +628,9 @@ function populateMenu_remoteTools {
     showMenuReusable -menuItems $menuItems
 }
 
-
-
-
-
-
-
-
-
-
-
+##########################################################
+#   Display the Remote Tools Menu 
+##########################################################
 
 function displayMenu_remoteTools {
     do {
@@ -914,16 +666,9 @@ function displayMenu_remoteTools {
     until ($input -eq '0')
 }
 
-
-
-
-
-
-
-
-
-
-
+##########################################################
+#   Populate the Main Menu Array
+##########################################################
 
 function populateMenu_mainMenu {
     $menuItems = @(
@@ -934,14 +679,9 @@ function populateMenu_mainMenu {
     showMenuReusable -menuItems $menuItems
 }
 
-
-
-
-
-
-
-
-
+##########################################################
+#   Display the Main Menu 
+##########################################################
 
 function displayMenu_mainMenu {
     do {
@@ -965,10 +705,9 @@ function displayMenu_mainMenu {
     until ($input -eq '0')
 }
 
-#############################################################################################################################################################################
-########################################################################### END FUNCTION LIBRARY ############################################################################
-#############################################################################################################################################################################
-
+##############################################################################################################################################
+############################################################   END MENU LIBRARY   ############################################################
+##############################################################################################################################################
 
 # Program starts here
 displayMenu_mainMenu
