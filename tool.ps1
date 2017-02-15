@@ -514,6 +514,11 @@ function activeDirListGroupMembers{
     Get-ADGroupMember $queryUserInput | select-object name | sort-object name
 }
 
+function displayErrorLogs{
+
+
+}
+
 ##############################################################################################################################################
 ############################################################ END FUNCTION LIBRARY ############################################################
 ##############################################################################################################################################
@@ -622,7 +627,8 @@ function populateMenu_remoteTools {
         "Remote Shutdown Checker",
         "Open Remote PC's C:\ Drive",
         "System Specs of Remote Host",
-        "Find Logged On User"
+        "Find Logged On User",
+        "Error Logs from the Last Two Weeks"
     )
 	
     showMenuReusable -menuItems $menuItems
@@ -658,6 +664,11 @@ function displayMenu_remoteTools {
                 Write-Host("Find Logged On User")
                 findLoggedOnUser
                 pressAnyKey
+            } '5' {
+                displayVersion
+                Write-Host("Error Logs from the Last Two Weeks")
+                displayErrorLogs
+                pressAnyKey
             } ('0') {
                 return
             }
@@ -672,7 +683,7 @@ function displayMenu_remoteTools {
 
 function populateMenu_acToolsMenu {
     $menuItems = @(
-        "Exit",
+        "Return",
         "Branch List Display All",
         "Branch List Search"
     )
