@@ -667,6 +667,47 @@ function displayMenu_remoteTools {
 }
 
 ##########################################################
+#   Populate the AC Tools Menu Array
+##########################################################
+
+function populateMenu_acToolsMenu {
+    $menuItems = @(
+        "Exit",
+        "Branch List Display All",
+        "Branch List Search"
+    )
+    showMenuReusable -menuItems $menuItems
+}
+
+##########################################################
+#   Display the AC Tools Menu 
+##########################################################
+
+function displayMenu_acTools {
+    do {
+        populateMenu_acToolsMenu
+        $input = Read-Host "Select an option"
+	
+        switch ($input) {
+            '1' {
+                displayVersion
+                Write-Host("Branch List Display All")
+                displayBranchList
+                pressAnyKey
+            } '2' {
+                displayVersion
+                Write-Host("Branch List Search")
+                searchBranchList
+                pressAnyKey
+            } ('0') {
+                return
+            }
+        }
+    }    
+    until ($input -eq '0')
+}
+
+##########################################################
 #   Populate the Main Menu Array
 ##########################################################
 
@@ -674,7 +715,8 @@ function populateMenu_mainMenu {
     $menuItems = @(
         "Exit",
         "Active Directory Sub Menu",
-        "Remote Tools Sub Menu"
+        "Remote Tools Sub Menu",
+        "AC Tools Sub Menu"
     )
     showMenuReusable -menuItems $menuItems
 }
@@ -696,6 +738,10 @@ function displayMenu_mainMenu {
             } '2' {
                 displayVersion
                 displayMenu_remoteTools
+                pressAnyKey
+            } '3' {
+                displayVersion
+                displayMenu_acTools
                 pressAnyKey
             } ('0') {
                 return
