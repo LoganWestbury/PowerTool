@@ -80,10 +80,10 @@ function createDesktopShortcut{
        
     )
 
-# Find logged in user
-findLoggedOnUser -ComputerName $inputHostName
+    # Find logged in user
+    findLoggedOnUser -ComputerName $inputHostName
   
-# Create desktop URL using logged in username 
+    # Create desktop URL using logged in username 
 
 }
 
@@ -94,48 +94,42 @@ findLoggedOnUser -ComputerName $inputHostName
 
 function findLoggedOnUser { 
        
-[CmdletBinding()]             
- Param              
-   (                        
-    [Parameter(Mandatory=$true, 
-               Position=0,                           
-               ValueFromPipeline=$true,             
-               ValueFromPipelineByPropertyName=$true)]             
-    [String[]]$ComputerName 
-   )#End Param 
+    [CmdletBinding()]             
+    Param              
+    (                        
+        [Parameter(Mandatory=$true, 
+            Position=0,                           
+            ValueFromPipeline=$true,             
+            ValueFromPipelineByPropertyName=$true)]             
+        [String[]]$ComputerName 
+    )#End Param 
  
-Begin             
-{             
- Write-Host "`n Checking Users . . . " 
- $i = 0             
-}#Begin           
-Process             
-{ 
-    $ComputerName | Foreach-object { 
-    $Computer = $_ 
-    try 
-        { 
-            $processinfo = @(Get-WmiObject -class win32_process -ComputerName $Computer -EA "Stop") 
-                if ($processinfo) 
-                {     
+    Begin {             
+        Write-Host "`n Checking Users . . . " 
+        $i = 0             
+    }#Begin           
+    Process { 
+        $ComputerName | Foreach-object { 
+            $Computer = $_ 
+            try { 
+                $processinfo = @(Get-WmiObject -class win32_process -ComputerName $Computer -EA "Stop") 
+                if ($processinfo) {     
                     $processinfo | Foreach-Object {$_.GetOwner().User} |  
                     Where-Object {$_ -ne "NETWORK SERVICE" -and $_ -ne "LOCAL SERVICE" -and $_ -ne "SYSTEM"} | 
                     Sort-Object -Unique | 
                     ForEach-Object { New-Object psobject -Property @{Computer=$Computer;LoggedOn=$_} } |  
                     Select-Object Computer,LoggedOn 
                 }#If 
-        } 
-    catch 
-        { 
-            "Cannot find any processes running on $computer" | Out-Host 
-        } 
-     }#Forech-object(Comptuters)        
+            } 
+            catch { 
+                "Cannot find any processes running on $computer" | Out-Host 
+            } 
+        }#Forech-object(Comptuters)        
              
-}#Process 
-End 
-{ 
+    }#Process 
+    End { 
  
-}#End 
+    }#End 
  
 }#Get-LoggedOnUser 
 
@@ -514,8 +508,18 @@ function activeDirListGroupMembers{
     Get-ADGroupMember $queryUserInput | select-object name | sort-object name
 }
 
+##########################################################
+#   Display Error Logs from a Remote Host
+##########################################################
+
 function displayErrorLogs{
 
+    $userInput = Read-Host("Enter the hostname/IP: ")
+
+    Get-WinEvent -LogName Application -computername $RemoteComputer1 |
+    Where-Object LevelDisplayname -eq Error |
+    Where-Object TimeCreated -ge ((Get-Date).AddDays(-14)) |
+    Export-Csv .\Temp\SDC.csv
 
 }
 
