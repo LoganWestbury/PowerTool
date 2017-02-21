@@ -10,31 +10,49 @@ $string1 = $string1.Substring(4)
 
 $createDir = ("\\$userInput\C$\Users\$string1\Desktop\")
 
+New-Item "$createDir\Shortcuts\" -type directory
+New-Item "$createDir\Shortcuts\Rev8" -type directory
+
+$createDir = ("\\$userInput\C$\Users\$string1\Desktop\Shortcuts\")
+
 Write-Host("Username: " + $string1)
 Write-Host("Directory: " + $createDir)
 
 Invoke-Expression "explorer $createDir"
 
-
-
 $Shell = New-Object -ComObject ("WScript.Shell")
 
-$ShortCut = $Shell.CreateShortcut("$createDir\Google.url")
+##########################################################
+#   Create ASO 2 Link  
 
-$ShortCut.TargetPath="www.google.com"
+$ShortCutASO2 = $Shell.CreateShortcut("$createDir\ASO2.url") 
+$ShortCutASO2.TargetPath="http://193.0.9.112/ASO2/login.aspx"
+$ShortCutASO2.Save()
 
-#$ShortCut.Arguments="-arguementsifrequired"
+##########################################################
+#   Create ASO 2.5 Link
 
-#$ShortCut.WorkingDirectory = "$createDir\";
+$ShortCutASO25 = $Shell.CreateShortcut("$createDir\ASO2_5.url") 
+$ShortCutASO25.TargetPath="http://193.0.9.112/ASO2-5/login.aspx"
+$ShortCutASO25.Save()
 
-#$ShortCut.WindowStyle = 1;
+##########################################################
+#   Create Web Mail Link
 
-#$ShortCut.Hotkey = "CTRL+SHIFT+F";
+$shortCutWebMail = $Shell.CreateShortcut("$createDir\WebMail.url") 
+$shortCutWebMail.TargetPath="https://webmail.arnoldclark.com"
+$shortCutWebMail.Save()
 
-#$ShortCut.IconLocation = "yourexecutable.exe, 0";
+##########################################################
+#   Create Salesmans Office Link
 
-#$ShortCut.Description = "Google Shortcut";
+$shortCutSMO = $Shell.CreateShortcut("$createDir\Salesmans_Office.url") 
+$shortCutSMO.TargetPath="http://10.6.1.1/salesmanoffice2/login.aspx"
+$shortCutSMO.Save()
 
-$ShortCut.Save()
+##########################################################
+#   Copy over Rev8 shortcuts
 
-
+Copy-Item -Path (".\resources\rev8\Rev8 AC.kcc") -Destination ("$createDir\Rev8\") 
+Copy-Item -Path (".\resources\rev8\Rev8 HF.kcc") -Destination ("$createDir\Rev8\") 
+Copy-Item -Path (".\resources\rev8\Rev8 JRW.kcc") -Destination ("$createDir\Rev8\") 
