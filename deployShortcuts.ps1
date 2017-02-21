@@ -53,6 +53,6 @@ $shortCutSMO.Save()
 ##########################################################
 #   Copy over Rev8 shortcuts
 
-Copy-Item -Path (".\resources\rev8\Rev8 AC.kcc") -Destination ("$createDir\Rev8\") 
-Copy-Item -Path (".\resources\rev8\Rev8 HF.kcc") -Destination ("$createDir\Rev8\") 
-Copy-Item -Path (".\resources\rev8\Rev8 JRW.kcc") -Destination ("$createDir\Rev8\") 
+Copy-Item -Path (".\resources\rev8\Rev8 Arnold Clark.kcc") -Destination ("$createDir\Rev8\") 
+Copy-Item -Path (".\resources\rev8\Rev8 Harry Fairbairn.kcc") -Destination ("$createDir\Rev8\") 
+Copy-Item -Path (".\resources\rev8\Rev8 John R Weir.kcc") -Destination ("$createDir\Rev8\") 
