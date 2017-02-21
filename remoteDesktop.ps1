@@ -6,3 +6,4 @@ $string1 = Get-WmiObject Win32_ComputerSystem -ComputerName $userInput -recurse 
 
 $string1 = $string1.Substring(3)
 
+Write-Host("Username: " + $string1)
