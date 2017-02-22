@@ -31,3 +31,5 @@ Invoke-WebRequest -Uri $url_deployShortcuts -OutFile $output_deployShortcuts
 Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 [Environment]::NewLine
 Read-Host("Press any key to exit...")
+
+#   Testing the auto update function of this file 
