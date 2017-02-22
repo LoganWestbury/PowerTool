@@ -47,12 +47,12 @@ $createDir = ("\\$userInput\C$\Users\$string1\Desktop\Shortcuts\")
 Copy-Item -Path ("$PSScriptRoot\resources\Shortcuts\Salesmans Office.lnk") -Destination ("$createDir\") 
 Copy-Item -Path ("$PSScriptRoot\resources\Shortcuts\AC Web Mail.lnk") -Destination ("$createDir\") 
 Copy-Item -Path ("$PSScriptRoot\resources\Shortcuts\ASO 2.lnk") -Destination ("$createDir\") 
-Copy-Item -Path ("$PSScriptRoot\Shortcuts\ASO 2_5.lnk") -Destination ("$createDir\") 
+Copy-Item -Path ("$PSScriptRoot\resources\Shortcuts\ASO 2_5.lnk") -Destination ("$createDir\") 
 
 ##########################################################
 #   Copy over the Rev8 shortcuts
 
-Copy-Item -Path ("$PSScriptRoot\Shortcuts\Rev8 (Kerridge)\Rev8 Arnold Clark.kcc") -Destination ("$createDir\Rev8 (Kerridge)\") 
+Copy-Item -Path ("$PSScriptRoot\resources\Shortcuts\Rev8 (Kerridge)\Rev8 Arnold Clark.kcc") -Destination ("$createDir\Rev8 (Kerridge)\") 
 Copy-Item -Path ("$PSScriptRoot\resources\Shortcuts\Rev8 (Kerridge)\Rev8 Harry Fairbairn.kcc") -Destination ("$createDir\Rev8 (Kerridge)\") 
 Copy-Item -Path ("$PSScriptRoot\resources\Shortcuts\Rev8 (Kerridge)\Rev8 John R Weir.kcc") -Destination ("$createDir\Rev8 (Kerridge)\") 
 
