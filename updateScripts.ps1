@@ -7,8 +7,6 @@
 
 $start_time = Get-Date
 
-
-
 ##########################################################
 #   Download and deploy latest updateScripts script 
 
@@ -16,21 +14,19 @@ $url_updateScripts = "https://raw.githubusercontent.com/LoganWestbury/PowerTool/
 $output_updateScripts = ".\updateScripts.ps1"
 
 #   Delete the file if it already exists
+Write-Host("Checking to see if file already exists.")
 If (Test-Path $output_updateScripts){
+	Write-Host("File found. Deleting the file now.")
 	Remove-Item $output_updateScripts
+	Write-Host("File deleted.")
 }
-
+else {
+	Write-Host("File does not already exist.")
+}
 #   Download the file from the given url
+Write-Host("Downloading latest version from GitHub.")
 Invoke-WebRequest -Uri $url_updateScripts -OutFile $output_updateScripts 
-
-
-
-
-
-
-
-
-
+Write-Host("File downloaded.")
 
 ##########################################################
 #   Download and deploy latest deployShortcut script 
@@ -39,35 +35,20 @@ $url_deployShortcuts = "https://raw.githubusercontent.com/LoganWestbury/PowerToo
 $output_deployShortcuts = ".\deployShortcuts.ps1"
 
 #   Delete the file if it already exists
+Write-Host("Checking to see if file already exists.")
 If (Test-Path $output_deployShortcuts){
+	Write-Host("File found. Deleting the file now.")
 	Remove-Item $output_deployShortcuts
+	Write-Host("File deleted.")
+}
+else {
+	Write-Host("File does not already exist.")
 }
 
 #   Download the file from the given url
+Write-Host("Downloading latest version from GitHub.")
 Invoke-WebRequest -Uri $url_deployShortcuts -OutFile $output_deployShortcuts 
-
-
-
-#now testing
-#test succesful 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Write-Host("File downloaded.")
 
 ##########################################################
 #   Display the output
