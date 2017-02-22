@@ -16,9 +16,7 @@ New-Item "$createDir\Shortcuts\Rev8" -type directory
 $createDir = ("\\$userInput\C$\Users\$string1\Desktop\Shortcuts\")
 
 Write-Host("Username: " + $string1)
-Write-Host("Directory: " + $createDir)
-
-Invoke-Expression "explorer $createDir"
+Write-Host("Directory: " + $createDir) 
 
 $Shell = New-Object -ComObject ("WScript.Shell")
 
@@ -53,6 +51,11 @@ $shortCutSMO.Save()
 ##########################################################
 #   Copy over Rev8 shortcuts
 
-Copy-Item -Path (".\resources\rev8\Rev8 Arnold Clark.kcc") -Destination ("$createDir\Rev8\") 
-Copy-Item -Path (".\resources\rev8\Rev8 Harry Fairbairn.kcc") -Destination ("$createDir\Rev8\") 
-Copy-Item -Path (".\resources\rev8\Rev8 John R Weir.kcc") -Destination ("$createDir\Rev8\") 
+Copy-Item -Path (".\resources\Shortcuts\Rev8 (Kerridge)\Rev8 Arnold Clark.kcc") -Destination ("$createDir\Rev8\") 
+Copy-Item -Path (".\resources\Shortcuts\Rev8 (Kerridge)\Rev8 Harry Fairbairn.kcc") -Destination ("$createDir\Rev8\") 
+Copy-Item -Path (".\resources\Shortcuts\Rev8 (Kerridge)\Rev8 John R Weir.kcc") -Destination ("$createDir\Rev8\") 
+
+##########################################################
+#   Open explorer at the new directory
+
+Invoke-Expression "explorer $createDir"
