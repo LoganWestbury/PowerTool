@@ -770,7 +770,29 @@ function displayMenu_mainMenu {
 ############################################################   END MENU LIBRARY   ############################################################
 ##############################################################################################################################################
 
-# Program starts here
-displayMenu_mainMenu
 
+
+
+
+
+$MenuItems = @(
+  New-SLMenuItem -Key '1' -Name 'Option 1' -Data { Invoke-Option1 }
+  New-SLMenuItem -Key '2' -Name 'Option 2' -Data { Invoke-Option2 }
+  New-SLMenuItem -Key '3' -Name 'Option 3 Menu' -Data { Show-Option3Menu }
+  New-SLMenuItem -Separator
+  New-SLMenuItemQuit
+)
+Show-SLMenuExecute -MenuItems $MenuItems -Title 'Test Menu' -Clear
+
+
+
+
+
+
+
+
+
+
+# Program starts here
+# displayMenu_mainMenu
 
