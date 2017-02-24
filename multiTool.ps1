@@ -481,32 +481,24 @@ function scanADForLockedOutUsers {
     textSeperateLine -inputString 'List of currently locked out users from Active Directory:'
     Search-ADAccount -LockedOut | Format-Table Name, LastLogonDate, PasswordExpired, PasswordNeverExpires, SamAccountName -Wrap
 
-    <#
-$Write = ("Select a user account and then click Ok to scan the system for the location of the lockout.")
-textSeperateLine $Write
-
- Search-ADAccount -LockedOut |
-    Select-Object Name, SamAccountName, Enabled, LastLogonDate, PasswordExpired, PasswordNeverExpires | Out-GridView -PassThru -Title "List of Locked Out Accounts" | Foreach-Object { lockoutLocationFinder -Identity $_.SamAccountName}
-
-#>
-	
 }
 
 ##########################################################
 #   Display Console Window Header
 ##########################################################
 
-function displayVersion {
-    Clear-Host
-    $runasAlias = [Environment]::UserName
-    Write-Host ("/---------------------------------------------------------------\")
-    Write-Host ("|--------------------------Help Desk----------------------------|")
-    Write-Host ("\---------------------------------------------------------------/")
-	
+function Display-Title {
+
+    cls 
+    $a = Get-Date
+
+    $title = ("Power Scripts | Logan Westbury | Github.com/LoganWestbury/PowerTool | " + $a.ToUniversalTime() + " | " + $env:username)
+    $border = "-" * ($title.length +4)
+    $gap = " " * (($host.UI.RawUI.windowsize.width/2)-($title.length/2)-2)
+    $gap2 = " " * ((($host.UI.RawUI.windowsize.width/2)-($title.length/2)-2)-1)
+    Write-Host "`n$gap$border$gap2`n$gap| $title |$gap2`n$gap$border$gap2" -ForegroundColor White
     [Environment]::NewLine
-	
-    Write-Host ("If you recieve any error messages could you please send a screenshot to Logan.Westbury@ArnoldClark.com") -ForegroundColor Yellow
-    [Environment]::NewLine
+
 }
 
 ##########################################################
@@ -514,7 +506,6 @@ function displayVersion {
 ##########################################################
 
 function queryRemoteHost {
-    [Environment]::NewLine
     [Environment]::NewLine
     $userQueryInput = Read-Host "Enter the hostname / IP address"
     
@@ -606,7 +597,7 @@ function showMenuReusable {
     )
     [Array]$tempMenuArray = $menuItems
 	
-    displayVersion
+    Display-Title
     $menuCounter = $tempMenuArray.Length
     $i = 0
 	
@@ -647,32 +638,32 @@ function displayMenu_activeDirectory {
 	
         switch ($input) {
             '1' {
-                displayVersion
+                Display-Title
                 Write-Host("Scan AD for Locked Out Users")
                 scanADForLockedOutUsers
                 pressAnyKey
             } '2' {
-                displayVersion
+                Display-Title
                 Write-Host("User Lockout Location Checker")
                 
                 pressAnyKey
             } '3' {
-                displayVersion
+                Display-Title
                 Write-Host("Query User with Employee ID")
                 queryActiveDirUser
                 pressAnyKey
             } '4' {
-                displayVersion
+                Display-Title
                 Write-Host("Reset Users Password")
                 activeDirUserPassReset
                 pressAnyKey
             } '5' {
-                displayVersion
+                Display-Title
                 Write-Host("List Members of a Group")
                 activeDirListGroupMembers
                 pressAnyKey
             }  '6' {
-                displayVersion
+                Display-Title
                 Write-Host("Find Computer via User")
                 findUserComputerLogin
                 pressAnyKey
@@ -712,32 +703,32 @@ function displayMenu_remoteTools {
 	
         switch ($input) {
             '1' {
-                displayVersion
+                Display-Title
                 Write-Host("Remote Shutdown Checker")
                 remoteShutdownChecker
                 pressAnyKey
             } '2' {
-                displayVersion
+                Display-Title
                 Write-Host("Open Remote PC's C:\ Drive")
                 openRemoteDrive
                 pressAnyKey
             } '3' {
-                displayVersion
+                Display-Title
                 Write-Host("System Specs of Remote Host")
                 queryRemoteHost
                 pressAnyKey
             } '4' {
-                displayVersion
+                Display-Title
                 Write-Host("Find Logged On User")
                 findLoggedOnUser
                 pressAnyKey
             } '5' {
-                displayVersion
+                Display-Title
                 Write-Host("Error Logs from the Last Two Weeks")
                 displayErrorLogs
                 pressAnyKey
             } '6' {
-                displayVersion
+                Display-Title
                 Write-Host("Deply Desktop Shortcuts to User")
                 Deploy-DesktopShortcuts
                 pressAnyKey
@@ -773,12 +764,12 @@ function displayMenu_acTools {
 	
         switch ($input) {
             '1' {
-                displayVersion
+                Display-Title
                 Write-Host("Branch List Display All")
                 displayBranchList
                 pressAnyKey
             } '2' {
-                displayVersion
+                Display-Title
                 Write-Host("Branch List Search")
                 searchBranchList
                 pressAnyKey
@@ -815,15 +806,15 @@ function displayMenu_mainMenu {
 	
         switch ($input) {
             '1' {
-                displayVersion
+                Display-Title
                 displayMenu_activeDirectory
                 pressAnyKey
             } '2' {
-                displayVersion
+                Display-Title
                 displayMenu_remoteTools
                 pressAnyKey
             } '3' {
-                displayVersion
+                Display-Title
                 displayMenu_acTools
                 pressAnyKey
             } ('0') {
